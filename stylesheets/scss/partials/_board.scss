@@ -26,8 +26,15 @@ header {
 
 .board {
   margin-top: 50px;
-  border: 2px solid black;
   grid-template: repeat(3, minmax(150px, 1fr)) / repeat(3, minmax(150px, 1fr));
+  gap: 5px;
+  
+  &-tile {
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    background-color: #eee;
+  }
 
   @media (max-width: 768px) {
     margin-top: 10px;
