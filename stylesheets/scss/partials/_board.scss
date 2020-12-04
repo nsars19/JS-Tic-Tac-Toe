@@ -34,6 +34,10 @@ header {
     height: 100%;
     border-radius: 6px;
     background-color: #eee;
+    color: #333;
+    font-size: 4em;
+    display: grid;
+    place-items: center;
   }
 
   @media (max-width: 768px) {
