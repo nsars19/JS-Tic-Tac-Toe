@@ -46,6 +46,7 @@ header {
   }
   @media (max-width: 540px) {
     margin-top: 12px;
+    &-tile { font-size: 3em; }
     grid-template: repeat(3, minmax(90px, 1fr)) / repeat(3, minmax(90px, 1fr));
   }
 }
