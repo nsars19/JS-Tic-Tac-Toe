@@ -34,19 +34,21 @@ header {
     height: 100%;
     border-radius: 6px;
     background-color: #eee;
-    color: #333;
-    font-size: 4em;
+    color: rgb(0, 230, 0);
+    font-size: 5em;
+    font-weight: bold;
     display: grid;
     place-items: center;
   }
 
   @media (max-width: 768px) {
+    &-tile { font-size: 4em }
     margin-top: 10px;
     grid-template: repeat(3, minmax(120px, 1fr)) / repeat(3, minmax(120px, 1fr));
   }
   @media (max-width: 540px) {
-    margin-top: 12px;
     &-tile { font-size: 3em; }
+    margin-top: 12px;
     grid-template: repeat(3, minmax(90px, 1fr)) / repeat(3, minmax(90px, 1fr));
   }
 }
