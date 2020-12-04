@@ -1,0 +1,37 @@
+.game-buttons {
+  font-size: 1.6em;
+  font-weight: 500;
+  color: #eee;
+
+  // individual buttons
+  & > * {
+    background-color: rgb(0, 150, 0);
+    min-width: 120px;
+    padding: 7px 22px;
+    margin: 15px;
+    margin-top: 45px;
+    text-align: center;
+    border-radius: 6px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+
+    &:active {
+      transform: translate(2px, 2px);
+    }
+    &:hover {
+      opacity: 90%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.3em;
+  }
+  @media (max-width: 540px) {
+    font-size: 1.1em;
+
+    & > * {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+}
