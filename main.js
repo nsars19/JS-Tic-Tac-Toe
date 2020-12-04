@@ -64,11 +64,11 @@ const gameFlowController = (() => {
 
 
 const player = (name, marker, isAI) => {
-  let name = name
-  let marker = marker
+  const getName = () => name
+  const getMarker = () => marker
 
   return {
-    name,
-    marker,
+    getName,
+    getMarker,
   }
 }
