@@ -81,8 +81,19 @@ const displayController = (() => {
     })
   }
 
+  const swapButtonVisibility = (main, opponent) => {
+    main.forEach(button => { button.classList.add("d-none") })
+    opponent.forEach(button => { button.classList.remove("d-none") })
+  }
+
+  const hideElement = element => element.classList.add("d-none")
+  const showElement = element => element.classList.remove("d-none")
+
   return {
     displayBoard,
+    swapButtonVisibility,
+    hideElement,
+    showElement,
   }
 })()
 
