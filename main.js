@@ -46,13 +46,7 @@ const displayController = (() => {
 })()
 
 
-const gameFlowController = (() => {
-
-})()
-
-
-
-const player = (name, marker, isAI) => {
+const Player = (name, marker, isAI) => {
   const getName = () => name
   const getMarker = () => marker
 
