@@ -9,6 +9,8 @@ const gameBoard = (() => {
     console.log(tile.target.innerText)
   }
 
+  const getBoard = () => { return board }
+
   const clearBoard = () => {
     for (let i = 0; i < 3; i++) {
       board[i] = ["","",""]
@@ -19,20 +21,8 @@ const gameBoard = (() => {
     board[outerIdx][innerIdx] = marker
   }
 
-  const init = () => {
-    // add event listeners for each of the 9 tiles
-    // fetches tiles by id, which is their position in the board array
-    // board[0][0], board[0][1], etc..
-    let ids = ["00", "01", "02", "10", "11", "12", "20", "21", "22"]
-    ids.forEach(id => {
-      let button = document.getElementById(`${id[0]}${id[1]}`)
-      button.addEventListener('click', checkMarkerAtTile)
-    })
-  }
-
   return {
-    init,
-    board,
+    getBoard,
     clearBoard,
     addToBoard,
     checkMarkerAtTile,
