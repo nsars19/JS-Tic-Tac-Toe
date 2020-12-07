@@ -1,13 +1,9 @@
 const gameBoard = (() => {
   let board = [
-    ["X", "", "X"],
-    ["", "O", ""],
-    ["O", "", "O"]
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""]
   ]
-
-  const checkMarkerAtTile = (tile) => {
-    console.log(tile.target.innerText)
-  }
 
   const getBoard = () => { return board }
 
@@ -15,6 +11,10 @@ const gameBoard = (() => {
     for (let i = 0; i < 3; i++) {
       board[i] = ["","",""]
     }
+  }
+
+  const tileAlreadyTaken = tileIdx => {
+    return board[tileIdx[0]][tileIdx[1]] === "" ? false : true
   }
 
   const addToBoard = (marker, outerIdx, innerIdx) => {
@@ -67,6 +67,7 @@ const gameBoard = (() => {
     addToBoard,
     boardFull,
     isWin,
+    tileAlreadyTaken,
   }
 })()
 
@@ -98,7 +99,7 @@ const displayController = (() => {
 })()
 
 
-const Player = (name, marker, isAI) => {
+const Player = (name, marker, isAI = false) => {
   const getName = () => name
   const getMarker = () => marker
 
@@ -107,3 +108,93 @@ const Player = (name, marker, isAI) => {
     getMarker,
   }
 }
+
+
+const gameFlowController = (() => {
+  let board = gameBoard.getBoard()
+  let opponentChoice;
+  const player1 = Player("Player 1", "X", false)
+  const player2 = Player("Player 2", "O", false);
+  let currentPlayer = player1;
+  let gameInPlay = false
+  const mainButtons = document.querySelectorAll(".main")
+  const opponentButtons = document.querySelectorAll(".vs")
+  const startButton = document.querySelector(".start-game")
+  const restartButton = document.querySelector(".restart")
+  
+  const initializeGame = () => {
+    // adds event listeners for start & restart buttons, and then opponent selection
+    // buttons. Upon opponent selection the play function is called, and passed
+    // the opponent selection variable. This variable determines whether the 
+    // second player is a huma or the CPU
+    startButton.addEventListener(
+      'click', 
+      displayController.swapButtonVisibility.bind(this, mainButtons, opponentButtons)
+    )
+  
+    restartButton.addEventListener('click', () => {
+      gameInPlay = false
+      gameBoard.clearBoard()
+      displayController.displayBoard(board)
+      displayController.swapButtonVisibility([restartButton], [startButton])
+    })
+    
+    const vsPlayer = document.querySelector(".vs-player")
+    const vsCPU = document.querySelector(".vs-cpu")
+    _addOpponentListeners(vsPlayer)
+    _addOpponentListeners(vsCPU)
+  }
+
+  const _addOpponentListeners = (button) => {
+    button.addEventListener('click', () => {
+      opponentChoice = button.getAttribute("value")
+      play(opponentChoice)
+    })
+  }
+
+  const initializeTurn = () => {
+    // add event listeners for each of the 9 tiles
+    // fetches tiles by id, which is their position in the board array
+    // board[0][0], board[0][1], etc..
+    let ids = ["00", "01", "02", "10", "11", "12", "20", "21", "22"]
+    ids.forEach(id => {
+      let button = document.getElementById(`${id[0]}${id[1]}`)
+      button.addEventListener('click', tile => {
+        current = tile.target.id.split("")
+        if (!gameBoard.tileAlreadyTaken(current) && gameInPlay) {
+          gameBoard.addToBoard(currentPlayer.getMarker(), current[0], current[1])
+          currentPlayer = nextPlayer()
+        }  
+        displayController.displayBoard(board)
+
+        if (gameBoard.isWin() || gameBoard.boardFull()) {
+          
+        }
+      })
+    })
+  }
+  
+  const nextPlayer = () => {
+    return currentPlayer = currentPlayer === player1 ? player2 : player1
+  }
+
+  const play = (opponentChoice) => {
+    // if (opponentChoice == 1) {
+    //   player2 = Player("Player2", "O")
+    // } else if (opponentChoice == 0) {
+    //   player2 = Player("Player 2", "O", true)
+    // }
+
+    displayController.swapButtonVisibility(opponentButtons, [restartButton]);
+    displayController.hideElement(startButton);
+    gameInPlay = true
+    currentPlayer = player1
+    initializeTurn(currentPlayer);
+  }
+
+  return {
+    initializeGame,
+  }
+})()
+
+gameFlowController.initializeGame()
