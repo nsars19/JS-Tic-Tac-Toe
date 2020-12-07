@@ -21,11 +21,15 @@ const gameBoard = (() => {
     board[outerIdx][innerIdx] = marker
   }
 
+  const boardFull = () => {
+    return !board.flat().some(tile => tile === "")
+  }
+
   return {
     getBoard,
     clearBoard,
     addToBoard,
-    checkMarkerAtTile,
+    boardFull,
   }
 })()
 
