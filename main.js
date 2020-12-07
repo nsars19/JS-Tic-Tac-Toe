@@ -44,7 +44,6 @@ const displayController = (() => {
     displayBoard,
   }
 })()
-displayController.displayBoard(gameBoard.board)
 
 
 const gameFlowController = (() => {
