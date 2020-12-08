@@ -90,11 +90,38 @@ const displayController = (() => {
   const hideElement = element => element.classList.add("d-none")
   const showElement = element => element.classList.remove("d-none")
 
+
+  let body = document.querySelector("body")
+  let overlay = document.createElement("div")
+  let boardWrapper = document.querySelector(".board-wrapper")
+  let header = document.querySelector("header")
+  let restart = document.querySelector(".restart")
+
+  const gameOver = () => {
+    overlay.innerText = "GAME OVER"
+    overlay.classList.add("overlay")
+    overlay.style.display = "grid"
+    body.style.position = "relative"
+    body.appendChild(overlay)
+    boardWrapper.style.filter = "blur(10px)"
+    header.style.filter = "blur(10px)"
+    restart.style.zIndex = "99999"
+  }
+
+  const hideGameOver = () => {
+    body.style.filter = "none"
+    header.style.filter = "none"
+    boardWrapper.style.filter = "none"
+    overlay.style.display = "none"
+  }
+
   return {
     displayBoard,
     swapButtonVisibility,
     hideElement,
     showElement,
+    gameOver,
+    hideGameOver,
   }
 })()
 
@@ -137,6 +164,7 @@ const gameFlowController = (() => {
       gameBoard.clearBoard()
       displayController.displayBoard(board)
       displayController.swapButtonVisibility([restartButton], [startButton])
+      displayController.hideGameOver()
     })
     
     const vsPlayer = document.querySelector(".vs-player")
