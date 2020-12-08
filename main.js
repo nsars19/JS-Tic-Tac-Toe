@@ -144,10 +144,16 @@ const pcPlayer = () => {
 const Player = (name, marker, isAI = false) => {
   const getName = () => name
   const getMarker = () => marker
+  const isCPU = () => isAI
+  if (isAI) {
+    const prototype = pcPlayer()
+    return Object.assign({}, prototype, {getName, getMarker, isCPU})
+  } 
 
   return {
     getName,
     getMarker,
+    isCPU
   }
 }
 
