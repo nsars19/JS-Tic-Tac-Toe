@@ -162,7 +162,7 @@ const gameFlowController = (() => {
   let board = gameBoard.getBoard()
   let opponentChoice;
   const player1 = Player("Player 1", "X", false)
-  const player2 = Player("Player 2", "O", false);
+  let player2;
   let currentPlayer = player1;
   let gameInPlay = false
   const mainButtons = document.querySelectorAll(".main")
@@ -219,12 +219,12 @@ const gameFlowController = (() => {
   }
 
   const play = (opponentChoice) => {
-    // if (opponentChoice == 1) {
-    //   player2 = Player("Player2", "O")
-    // } else if (opponentChoice == 0) {
-    //   player2 = Player("Player 2", "O", true)
-    // }
-
+    if (opponentChoice == 1) {
+      player2 = Player("Player2", "O")
+    } else if (opponentChoice == 0) {
+      player2 = Player("Player 2", "O", true)
+    }
+    
     displayController.swapButtonVisibility(opponentButtons, [restartButton]);
     displayController.hideElement(startButton);
     gameInPlay = true
