@@ -217,7 +217,11 @@ const gameFlowController = (() => {
     if(currentPlayer.isCPU()) {
       current = currentPlayer.chooseTile(gameBoard.getBoard())
       gameBoard.addToBoard(currentPlayer.getMarker(), current[0], current[1])
-      displayController.displayBoard(board)
+      // add some delay to make it seem like you're playing against a person
+      setTimeout(() => {
+        displayController.displayBoard(board)
+      }, Math.floor(Math.random() * 1500) + 500)
+      
       currentPlayer = nextPlayer()
     }
     if (gameBoard.isWin() || gameBoard.boardFull()) {
