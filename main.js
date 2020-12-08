@@ -180,26 +180,17 @@ const gameFlowController = (() => {
     })
   }
 
-  const initializeTurn = () => {
-    // add event listeners for each of the 9 tiles
-    // fetches tiles by id, which is their position in the board array
-    // board[0][0], board[0][1], etc..
-    let ids = ["00", "01", "02", "10", "11", "12", "20", "21", "22"]
-    ids.forEach(id => {
-      let button = document.getElementById(`${id[0]}${id[1]}`)
-      button.addEventListener('click', tile => {
-        current = tile.target.id.split("")
-        if (!gameBoard.tileAlreadyTaken(current) && gameInPlay) {
-          gameBoard.addToBoard(currentPlayer.getMarker(), current[0], current[1])
-          currentPlayer = nextPlayer()
-        }  
-        displayController.displayBoard(board)
+  const initializeTurn = (tile) => {
+    current = tile.target.id.split("")
+    if (gameInPlay && !gameBoard.tileAlreadyTaken(current)) {
+      gameBoard.addToBoard(currentPlayer.getMarker(), current[0], current[1])
+      currentPlayer = nextPlayer()
+    }  
+    displayController.displayBoard(board)
 
-        if (gameBoard.isWin() || gameBoard.boardFull()) {
-          
-        }
-      })
-    })
+    if (gameBoard.isWin() || gameBoard.boardFull()) {
+      displayController.gameOver()
+    }
   }
   
   const nextPlayer = () => {
@@ -217,7 +208,15 @@ const gameFlowController = (() => {
     displayController.hideElement(startButton);
     gameInPlay = true
     currentPlayer = player1
-    initializeTurn(currentPlayer);
+
+    // add event listeners for each of the 9 tiles
+    // fetches tiles by id, which is their position in the board array
+    // board[0][0], board[0][1], etc..
+    let ids = ["00", "01", "02", "10", "11", "12", "20", "21", "22"]
+    ids.forEach(id => {
+      let button = document.getElementById(`${id[0]}${id[1]}`)
+      button.addEventListener('click', initializeTurn)
+    })
   }
 
   return {
