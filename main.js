@@ -205,10 +205,21 @@ const gameFlowController = (() => {
     current = tile.target.id.split("")
     if (gameInPlay && !gameBoard.tileAlreadyTaken(current)) {
       gameBoard.addToBoard(currentPlayer.getMarker(), current[0], current[1])
-      currentPlayer = nextPlayer()
     }  
     displayController.displayBoard(board)
 
+    if (gameBoard.isWin() || gameBoard.boardFull()) {
+      displayController.gameOver()
+      return
+    }
+
+    currentPlayer = nextPlayer()
+    if(currentPlayer.isCPU()) {
+      current = currentPlayer.chooseTile(gameBoard.getBoard())
+      gameBoard.addToBoard(currentPlayer.getMarker(), current[0], current[1])
+      displayController.displayBoard(board)
+      currentPlayer = nextPlayer()
+    }
     if (gameBoard.isWin() || gameBoard.boardFull()) {
       displayController.gameOver()
     }
