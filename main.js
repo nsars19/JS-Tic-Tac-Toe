@@ -126,6 +126,21 @@ const displayController = (() => {
 })()
 
 
+const pcPlayer = () => {
+  const _randomNum = () => Math.floor(Math.random() * 3)
+  const chooseTile = board => {
+    let idx = [_randomNum(), _randomNum()]
+    while (board[idx[0]][idx[1]] !== "") {
+      idx = [_randomNum(), _randomNum()]
+    }
+    return idx
+  }  
+
+  return {
+    chooseTile,
+  }
+}
+
 const Player = (name, marker, isAI = false) => {
   const getName = () => name
   const getMarker = () => marker
