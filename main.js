@@ -204,9 +204,8 @@ const gameFlowController = (() => {
   const initializeTurn = (tile) => {
     current = tile.target.id.split("")
     if (gameBoard.tileAlreadyTaken(current) || !gameInPlay) { return }
-    if (gameInPlay) {
-      gameBoard.addToBoard(currentPlayer.getMarker(), current[0], current[1])
-    }  
+
+    gameBoard.addToBoard(currentPlayer.getMarker(), current[0], current[1])
     displayController.displayBoard(board)
 
     if (gameBoard.isWin() || gameBoard.boardFull()) {
