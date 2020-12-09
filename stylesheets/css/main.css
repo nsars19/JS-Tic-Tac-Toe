@@ -106,11 +106,18 @@ header h1 {
   text-align: center;
   display: grid;
   place-items: center;
+  align-content: center;
   position: absolute;
   top: 0;
   left: 0;
   background: transparent;
   z-index: 9999;
+}
+.overlay h3 {
+  color: #252525;
+  font-weight: bolder;
+  font-size: 35px;
+  text-shadow: 2px 2px 1px rebeccapurple;
 }
 
 *,
