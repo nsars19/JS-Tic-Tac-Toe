@@ -210,7 +210,6 @@ const gameFlowController = (() => {
     if (gameBoard.tileAlreadyTaken(choice) || !gameInPlay) { return }
     // otherwise add the piece to the tile & display the new board state
     choice = tile.target.id.split("")
-    gameBoard.addToBoard(currentPlayer.getMarker(), choice[0], choice[1])
     displayController.displayBoard(board)
     // check for game over condition & return out of function to prevent any more pieces from being added
     if (_gameOver()) {
