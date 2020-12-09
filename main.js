@@ -244,11 +244,7 @@ const gameFlowController = (() => {
   }
 
   const _play = (opponentChoice) => {
-    if (opponentChoice == 1) {
-      player2 = Player("Player2", "O")
-    } else if (opponentChoice == 0) {
-      player2 = Player("Player 2", "O", true)
-    }
+    player2 = opponentChoice == 1 ? Player("Player2", "O") : Player("Player 2", "O", true)
     
     displayController.swapButtonVisibility(opponentButtons, [restartButton]);
     displayController.hideElement(startButton);
