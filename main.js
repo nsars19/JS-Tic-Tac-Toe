@@ -61,6 +61,40 @@ const gameBoard = (() => {
     return (_horizontalWin() || _verticalWin() || _diagonalWin()) ? true : false
   }
   
+  const returnWinningMark = () => {
+    if (_horizontalWin()) {
+      for (let i = 0; i < 3; i++) {
+        let current = board[i].join("")
+        if (_tripleMatch(current)) {
+          return current[0];
+        }
+      }
+    }
+    
+    if (_verticalWin()) {
+      for (let i = 0; i < 3; i++) {
+        let current = ""
+        for (let j = 0; j < 3; j++) {
+          current += board[j][i]
+        }
+        if (_tripleMatch(current)) {
+          return current[0]
+        }
+      }
+    }
+    
+    if (_diagonalWin()) {
+      firstDiagonal = board[0][0] + board[1][1] + board[2][2]
+    secondDiagonal = board[0][2] + board[1][1] + board[2][0]
+
+    if (_tripleMatch(firstDiagonal)) {
+      return firstDiagonal[0]
+    } else if (_tripleMatch(secondDiagonal)) {
+      return secondDiagonal[0]
+    }
+    }
+  }
+
   return {
     getBoard,
     clearBoard,
@@ -68,6 +102,7 @@ const gameBoard = (() => {
     boardFull,
     isWin,
     tileAlreadyTaken,
+    returnWinningMark,
   }
 })()
 
