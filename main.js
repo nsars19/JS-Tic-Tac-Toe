@@ -249,6 +249,7 @@ const gameFlowController = (() => {
   }
 
   const _initializeTurn = (tile) => {
+    choice = tile.target.id.split("")
     // disallow placing pieces if game is not in play, or the tile already has a piece on it
     if (gameBoard.tileAlreadyTaken(choice) || !gameInPlay) { return }
     // otherwise add the piece to the tile & display the new board state
