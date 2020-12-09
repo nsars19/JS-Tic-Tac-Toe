@@ -240,6 +240,11 @@ const gameFlowController = (() => {
     return gameBoard.isWin() || gameBoard.boardFull()
   }
 
+  const _getWinner = () => {
+    let winningMark = gameBoard.returnWinningMark()
+    return winningMark === "X" ? player1.getName() : player2.getName()
+  }
+
   const _initializeTurn = (tile) => {
     // disallow placing pieces if game is not in play, or the tile already has a piece on it
     if (gameBoard.tileAlreadyTaken(choice) || !gameInPlay) { return }
