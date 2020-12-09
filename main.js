@@ -197,43 +197,54 @@ const gameFlowController = (() => {
   const _addOpponentListeners = (button) => {
     button.addEventListener('click', () => {
       opponentChoice = button.getAttribute("value")
-      play(opponentChoice)
+      _play(opponentChoice)
     })
   }
 
-  const initializeTurn = (tile) => {
-    current = tile.target.id.split("")
-    if (gameBoard.tileAlreadyTaken(current) || !gameInPlay) { return }
+  const _gameOver = () => {
+    return gameBoard.isWin() || gameBoard.boardFull()
+  }
 
-    gameBoard.addToBoard(currentPlayer.getMarker(), current[0], current[1])
+  const _initializeTurn = (tile) => {
+    // disallow placing pieces if game is not in play, or the tile already has a piece on it
+    if (gameBoard.tileAlreadyTaken(choice) || !gameInPlay) { return }
+    // otherwise add the piece to the tile & display the new board state
+    choice = tile.target.id.split("")
+    gameBoard.addToBoard(currentPlayer.getMarker(), choice[0], choice[1])
     displayController.displayBoard(board)
-
-    if (gameBoard.isWin() || gameBoard.boardFull()) {
+    // check for game over condition & return out of function to prevent any more pieces from being added
+    if (_gameOver()) {
       displayController.gameOver()
       return
     }
-
-    currentPlayer = nextPlayer()
+    // change current player from player1 to player2 to switch markers
+    currentPlayer = _nextPlayer()
+    // if player2 is a human the function ends here. Upon clicking a tile this function will run again with player 2's marker
+    // if player2 is the PC, then player2 selects a piece at random, that piece is displayed on the board, and win conditions are checked
     if(currentPlayer.isCPU()) {
-      current = currentPlayer.chooseTile(gameBoard.getBoard())
-      gameBoard.addToBoard(currentPlayer.getMarker(), current[0], current[1])
-      // add some delay to make it seem like you're playing against a person
-      setTimeout(() => {
-        displayController.displayBoard(board)
-      }, Math.floor(Math.random() * 1500) + 500)
-      
-      currentPlayer = nextPlayer()
-    }
-    if (gameBoard.isWin() || gameBoard.boardFull()) {
-      displayController.gameOver()
+      _computerTurn()
+      currentPlayer = _nextPlayer()
+
+      if (_gameOver()) {
+        displayController.gameOver()
+      }
     }
   }
   
-  const nextPlayer = () => {
+  const _computerTurn = () => {
+    choice = currentPlayer.chooseTile(gameBoard.getBoard())
+    gameBoard.addToBoard(currentPlayer.getMarker(), choice[0], choice[1])
+    // add some delay to make it seem like you're playing against a person
+    setTimeout(() => {
+      displayController.displayBoard(board)
+    }, Math.floor(Math.random() * 500) + 500)
+  }
+
+  const _nextPlayer = () => {
     return currentPlayer = currentPlayer === player1 ? player2 : player1
   }
 
-  const play = (opponentChoice) => {
+  const _play = (opponentChoice) => {
     if (opponentChoice == 1) {
       player2 = Player("Player2", "O")
     } else if (opponentChoice == 0) {
@@ -251,7 +262,7 @@ const gameFlowController = (() => {
     let ids = ["00", "01", "02", "10", "11", "12", "20", "21", "22"]
     ids.forEach(id => {
       let button = document.getElementById(`${id[0]}${id[1]}`)
-      button.addEventListener('click', initializeTurn)
+      button.addEventListener('click', _initializeTurn)
     })
   }
 
