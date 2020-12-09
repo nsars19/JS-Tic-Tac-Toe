@@ -128,14 +128,17 @@ const displayController = (() => {
 
   let body = document.querySelector("body")
   let overlay = document.createElement("div")
+  let winner = document.createElement("h3")
   let boardWrapper = document.querySelector(".board-wrapper")
   let header = document.querySelector("header")
   let restart = document.querySelector(".restart")
 
-  const gameOver = () => {
+  const gameOver = (winnerName) => {
     overlay.innerText = "GAME OVER"
     overlay.classList.add("overlay")
     overlay.style.display = "grid"
+    winner.innerText = `${winnerName} WINS`
+    overlay.appendChild(winner)
     body.style.position = "relative"
     body.appendChild(overlay)
     boardWrapper.style.filter = "blur(10px)"
