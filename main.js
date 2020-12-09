@@ -203,7 +203,8 @@ const gameFlowController = (() => {
 
   const initializeTurn = (tile) => {
     current = tile.target.id.split("")
-    if (gameInPlay && !gameBoard.tileAlreadyTaken(current)) {
+    if (gameBoard.tileAlreadyTaken(current)) { return }
+    if (gameInPlay) {
       gameBoard.addToBoard(currentPlayer.getMarker(), current[0], current[1])
     }  
     displayController.displayBoard(board)
