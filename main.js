@@ -257,8 +257,7 @@ const gameFlowController = (() => {
     displayController.displayBoard(board)
     // check for game over condition & return out of function to prevent any more pieces from being added
     if (_gameOver()) {
-      displayController.gameOver(_getWinner())
-      return
+      return gameBoard.isWin() ? displayController.gameOver(_getWinner()) : displayController.gameOver("NO ONE")
     }
     // change current player from player1 to player2 to switch markers
     currentPlayer = _nextPlayer()
@@ -269,7 +268,7 @@ const gameFlowController = (() => {
       currentPlayer = _nextPlayer()
 
       if (_gameOver()) {
-        displayController.gameOver(_getWinner())
+        return gameBoard.isWin() ? displayController.gameOver(_getWinner()) : displayController.gameOver("NO ONE")
       }
     }
   }
