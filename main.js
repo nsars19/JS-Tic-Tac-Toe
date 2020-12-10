@@ -172,6 +172,15 @@ const pcPlayer = () => {
       idx = [_randomNum(), _randomNum()]
     }
 
+    board.forEach((row, outerIdx) => {
+      if (row.join("") == "XX") {
+        for (let i = 0; i < 3; i++) {
+          if (board[outerIdx][i] == "") {
+            idx = [outerIdx, i]
+          }
+        }
+      }
+    })
     return idx
   }  
 
